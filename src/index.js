@@ -1,15 +1,23 @@
-import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {SafeAreaView, StyleSheet} from 'react-native';
 import React from 'react';
-import CustomText from './utils/CustomText';
+import Routes from './navigation/Routes';
+import {NavigationContainer} from '@react-navigation/native';
 
 const App = () => {
   return (
-    <SafeAreaView>
-      <CustomText>emre</CustomText>
+    <SafeAreaView style={styles.body}>
+      <NavigationContainer>
+        <Routes />
+      </NavigationContainer>
     </SafeAreaView>
   );
 };
 
 export default App;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  body: {
+    backgroundColor: 'white',
+    flex: 1,
+  },
+});

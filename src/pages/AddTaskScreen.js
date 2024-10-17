@@ -1,10 +1,11 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import CustomText from './../utils/CustomText';
 
 const AddTaskScreen = () => {
   return (
     <View>
-      <Text>AddTaskScreen</Text>
+      <CustomText>AddTaskScreen</CustomText>
     </View>
   );
 };

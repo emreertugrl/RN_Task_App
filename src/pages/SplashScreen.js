@@ -1,10 +1,11 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import CustomText from '../utils/CustomText';
 
 const SplashScreen = () => {
   return (
     <View>
-      <Text>SplashScreen</Text>
+      <CustomText>selam 21</CustomText>
     </View>
   );
 };
