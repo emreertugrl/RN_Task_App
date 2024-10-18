@@ -8,6 +8,7 @@ import {
 import React from 'react';
 import CustomText from './../utils/CustomText';
 import colors from '../themes/Colors';
+import {formatDate} from './../utils/formatDate';
 
 const CustomTextInput = ({
   imageSource,
@@ -35,7 +36,9 @@ const CustomTextInput = ({
             style={styles.textInput}
           />
         ) : (
-          <CustomText>{value}</CustomText>
+          <CustomText style={styles.date}>
+            {value && formatDate(value?.toString())}
+          </CustomText>
         )}
       </View>
     </TouchableOpacity>
@@ -72,5 +75,10 @@ const styles = StyleSheet.create({
     color: colors.text.primary,
     fontWeight: '600',
     marginBottom: 5,
+  },
+  date: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: colors.black,
   },
 });

@@ -6,12 +6,11 @@ import StatusButton from './StatusButton';
 import {useNavigation} from '@react-navigation/native';
 import ScreenName from '../constants/ScreenName';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {formatDate} from '../utils/formatDate';
 
 const TodoItem = ({data, onDelete}) => {
-  //
   const navigation = useNavigation();
 
-  // console.log(data);
   return (
     <View style={styles.container}>
       <View style={styles.itemHeader}>
@@ -50,7 +49,7 @@ const TodoItem = ({data, onDelete}) => {
             iconName="pencil"
             color="black"
             size={20}
-            onPress={() => navigation.navigate(ScreenName.addTask)}
+            onPress={() => navigation.navigate(ScreenName.addTask, {data})}
           />
           <StatusButton
             iconName="delete"
@@ -68,14 +67,18 @@ const TodoItem = ({data, onDelete}) => {
           <CustomText>Başlangıç Tarihi</CustomText>
           <View style={styles.timeContainer}>
             <Icon name="clock-outline" size={15} color={colors.primary} />
-            <CustomText style={styles.timeText}>15.10.2024 - 18.59</CustomText>
+            <CustomText style={styles.timeText}>
+              {formatDate(data.startDate)}
+            </CustomText>
           </View>
         </View>
         <View>
           <CustomText>Bitiş Tarihi</CustomText>
           <View style={styles.timeContainer}>
             <Icon name="clock-outline" size={15} color={colors.primary} />
-            <CustomText style={styles.timeText}>25.10.2024 - 18.59</CustomText>
+            <CustomText style={styles.timeText}>
+              {formatDate(data.endDate)}
+            </CustomText>
           </View>
         </View>
       </View>

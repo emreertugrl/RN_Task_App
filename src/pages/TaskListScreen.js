@@ -1,4 +1,4 @@
-import {Dimensions, FlatList, StyleSheet, Text, View} from 'react-native';
+import {Dimensions, FlatList, StyleSheet, View} from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import colors from '../themes/Colors';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -11,18 +11,25 @@ import ScreenName from '../constants/ScreenName';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import EmptyList from '../components/EmptyList';
 import CustomText from '../utils/CustomText';
+import Toast from 'react-native-toast-message';
 
 const TaskListScreen = () => {
   const navigation = useNavigation();
 
   const [searchText, setSearchText] = useState('');
   const [tasks, setTasks] = useState([]);
+  const [filteredTasks, setFilteredTasks] = useState([]);
 
   useFocusEffect(
     useCallback(() => {
       loadTask();
     }, []),
   );
+
+  useEffect(() => {
+    filterTasks();
+  }, [searchText, tasks]);
+
   const loadTask = async () => {
     try {
       // AsyncStorage da taskları al
@@ -36,6 +43,20 @@ const TaskListScreen = () => {
     }
   };
 
+  const filterTasks = () => {
+    if (searchText) {
+      // taskların title ile searchText eşleşirse dizi olarak ver
+      const filtered = tasks.filter(task =>
+        task.title.toLowerCase().includes(searchText.toLowerCase()),
+      );
+      // filtrelenmiş diziyi state aktar
+      setFilteredTasks(filtered);
+    } else {
+      // searchtext boş ise taskların hepsini ekrana bastır.
+      setFilteredTasks(tasks);
+    }
+  };
+
   const handleDeleteTask = async id => {
     try {
       // bastığımızda elemanın idsine göre task state'ini filtrele ve depşkene aktar
@@ -44,6 +65,12 @@ const TaskListScreen = () => {
       setTasks(updatedTasks);
       // AsyncStorage'daki taskları güncelle
       AsyncStorage.setItem('tasks', JSON.stringify(updatedTasks));
+
+      Toast.show({
+        type: 'info',
+        text1: 'Task Silindi',
+        topOffset: 60,
+      });
     } catch (error) {
       console.log(error, 'failed to delete task');
     }
@@ -74,7 +101,7 @@ const TaskListScreen = () => {
             showsVerticalScrollIndicator={false}
             ListHeaderComponent={renderHeader}
             ListEmptyComponent={EmptyList}
-            data={tasks}
+            data={filteredTasks}
             renderItem={({item}) => (
               <TodoItem
                 data={item}
