@@ -2,7 +2,7 @@ import {SafeAreaView, StyleSheet} from 'react-native';
 import React from 'react';
 import Routes from './navigation/Routes';
 import {NavigationContainer} from '@react-navigation/native';
-
+import 'react-native-gesture-handler';
 const App = () => {
   return (
     <SafeAreaView style={styles.body}>
