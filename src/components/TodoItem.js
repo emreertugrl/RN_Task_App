@@ -7,7 +7,7 @@ import {useNavigation} from '@react-navigation/native';
 import ScreenName from '../constants/ScreenName';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const TodoItem = ({data}) => {
+const TodoItem = ({data, onDelete}) => {
   //
   const navigation = useNavigation();
 
@@ -56,7 +56,7 @@ const TodoItem = ({data}) => {
             iconName="delete"
             color="#c0695e"
             size={20}
-            onPress={() => ''}
+            onPress={() => onDelete()}
           />
         </View>
       </View>
