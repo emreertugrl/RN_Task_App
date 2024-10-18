@@ -14,18 +14,29 @@ const CustomTextInput = ({
   onChangeText,
   value,
   style,
+  label,
+  onPressIcon,
+  isDate,
   ...rest
 }) => {
   return (
-    <TouchableOpacity style={[styles.container, style]}>
+    <TouchableOpacity
+      disabled={onPressIcon ? false : true}
+      onPress={onPressIcon}
+      style={[styles.container, style]}>
+      <CustomText style={styles.label}>{label}</CustomText>
       <View style={styles.inputContainer}>
         <Image source={imageSource} style={styles.image} />
-        <TextInput
-          {...rest}
-          value={value}
-          onChangeText={onChangeText}
-          style={styles.textInput}
-        />
+        {!onPressIcon ? (
+          <TextInput
+            {...rest}
+            value={value}
+            onChangeText={onChangeText}
+            style={styles.textInput}
+          />
+        ) : (
+          <CustomText>{value}</CustomText>
+        )}
       </View>
     </TouchableOpacity>
   );
@@ -55,5 +66,11 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 16,
     padding: 0,
+  },
+  label: {
+    fontSize: 15,
+    color: colors.text.primary,
+    fontWeight: '600',
+    marginBottom: 5,
   },
 });

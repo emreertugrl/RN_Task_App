@@ -1,5 +1,5 @@
 import {Dimensions, FlatList, StyleSheet, Text, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import colors from '../themes/Colors';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import CustomTextInput from '../components/CustomTextInput';
@@ -8,6 +8,7 @@ import TodoItem from './../components/TodoItem';
 import CustomBotton from '../components/CustomBotton';
 import {useNavigation} from '@react-navigation/native';
 import ScreenName from '../constants/ScreenName';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const TaskListScreen = () => {
   const navigation = useNavigation();
@@ -23,6 +24,30 @@ const TaskListScreen = () => {
     {id: 7, title: 'Task 7', userId: 7, status: 'done'},
     {id: 8, title: 'Task 8', userId: 8, status: 'closed'},
   ]);
+
+  // const clearAll = async () => {
+  //   try {
+  //     await AsyncStorage.clear();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  // useEffect(() => {
+  //   clearAll();
+  // }, []);
+  const loadTask = async () => {
+    try {
+      // AsyncStorage da taskları al
+      const existingTask = await AsyncStorage.getItem('tasks');
+      // tasks varsa bunu json çevir yoksa boş dizi ver
+      const tasks = existingTask ? JSON.parse(existingTask) : {};
+      // state'i güncelle
+      setTasks(tasks);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  loadTask();
   return (
     <View style={styles.container}>
       <View style={styles.mainContentContainer}>
